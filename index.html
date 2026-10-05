@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ExpertBridge – 1-on-1 Sessions with Verified Experts</title>
+<meta name="description" content="Book personalized 1-on-1 video sessions with verified experts in tech, careers, finance, legal, marketing and startups.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  fontFamily: { display: ['"Bricolage Grotesque"', 'sans-serif'], sans: ['Inter', 'system-ui', 'sans-serif'] },
+  colors: { navy: '#1E293B', indigo: { 900: '#312E81', 800: '#3730A3' }, trust: { DEFAULT: '#059669', dark: '#047857' } }
+}}};
+</script>
+<style>
+  :focus-visible { outline: 3px solid #059669; outline-offset: 2px; }
+  .slot-active { background: #312E81; color: #fff; border-color: #312E81; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+</head>
+<body class="font-sans text-slate-700 bg-white antialiased">
+
+<!-- Header -->
+<header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <a href="#home" class="font-display font-extrabold text-xl text-indigo-900 flex items-center gap-2">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M3 20c4-10 18-10 22 0" stroke="#059669" stroke-width="3" stroke-linecap="round"/><path d="M8 20v-5M14 20V11M20 20v-5" stroke="#312E81" stroke-width="3" stroke-linecap="round"/></svg>
+      ExpertBridge
+    </a>
+    <nav class="hidden lg:flex items-center gap-8 text-sm font-medium" aria-label="Main">
+      <a href="#home" class="hover:text-indigo-900">Home</a>
+      <a href="#experts" class="hover:text-indigo-900">Browse Experts</a>
+      <a href="#how" class="hover:text-indigo-900">How It Works</a>
+      <a href="#pricing" class="hover:text-indigo-900">Pricing</a>
+      <a href="#become" class="hover:text-indigo-900">Become an Expert</a>
+    </nav>
+    <div class="hidden lg:flex items-center gap-3">
+      <button class="px-4 py-2 text-sm font-semibold text-indigo-900 hover:bg-slate-100 rounded-lg">Sign In</button>
+      <a href="#experts" class="px-5 py-2.5 text-sm font-semibold text-white bg-trust hover:bg-trust-dark rounded-lg">Book a Session</a>
+    </div>
+    <button id="menuBtn" class="lg:hidden p-2 rounded-lg hover:bg-slate-100" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+  <div id="mobileMenu" class="hidden lg:hidden border-t border-slate-200 bg-white px-4 py-4 space-y-1 text-sm font-medium">
+    <a href="#home" class="block py-2">Home</a><a href="#experts" class="block py-2">Browse Experts</a>
+    <a href="#how" class="block py-2">How It Works</a><a href="#pricing" class="block py-2">Pricing</a>
+    <a href="#become" class="block py-2">Become an Expert</a>
+    <div class="flex gap-3 pt-3">
+      <button class="flex-1 py-2.5 border border-slate-300 rounded-lg font-semibold text-indigo-900">Sign In</button>
+      <a href="#experts" class="flex-1 text-center py-2.5 bg-trust text-white rounded-lg font-semibold">Book a Session</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- Hero -->
+<section id="home" class="bg-indigo-900 text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 grid lg:grid-cols-5 gap-12 items-center">
+    <div class="lg:col-span-3">
+      <h1 class="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-[1.05] tracking-tight">Connect 1-on-1 with Verified Industry Experts</h1>
+      <p class="mt-5 text-lg text-indigo-100 max-w-xl">Get personalized advice, career guidance, and actionable insights from top mentors in your field.</p>
+      <form id="searchForm" class="mt-8 bg-white rounded-xl p-2 flex flex-col sm:flex-row gap-2 shadow-xl max-w-2xl" role="search">
+        <label class="sr-only" for="q">Search by topic</label>
+        <input id="q" type="text" placeholder="Try Software Engineering, Mutual Funds, Legal Advice" class="flex-1 px-4 py-3 text-slate-800 rounded-lg focus:outline-none placeholder:text-slate-400">
+        <label class="sr-only" for="cat">Category</label>
+        <select id="cat" class="px-3 py-3 text-slate-700 bg-slate-100 rounded-lg focus:outline-none">
+          <option>All</option><option>Technology</option><option>Business &amp; Startups</option><option>Career &amp; Jobs</option><option>Finance &amp; Legal</option><option>Marketing</option>
+        </select>
+        <button class="px-6 py-3 bg-trust hover:bg-trust-dark text-white font-semibold rounded-lg">Find Experts</button>
+      </form>
+    </div>
+    <dl class="lg:col-span-2 grid grid-cols-3 lg:grid-cols-1 gap-6 lg:gap-0 lg:border-l lg:border-indigo-700 lg:pl-10 lg:divide-y lg:divide-indigo-700">
+      <div class="lg:py-5"><dt class="text-sm text-indigo-200 order-2">Verified experts</dt><dd class="font-display font-extrabold text-3xl sm:text-4xl">500+</dd></div>
+      <div class="lg:py-5"><dt class="text-sm text-indigo-200">Minutes coached</dt><dd class="font-display font-extrabold text-3xl sm:text-4xl">10,000+</dd></div>
+      <div class="lg:py-5"><dt class="text-sm text-indigo-200">Average rating</dt><dd class="font-display font-extrabold text-3xl sm:text-4xl">4.9<span class="text-xl text-indigo-300">/5</span></dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- Categories -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+  <h2 class="font-display font-extrabold text-3xl text-navy">Explore advisory fields</h2>
+  <p class="mt-2 text-slate-500">Pick a field to filter experts below.</p>
+  <div id="categoryGrid" class="mt-8 grid grid-cols-2 md:grid-cols-5 gap-4"></div>
+</section>
+
+<!-- Experts -->
+<section id="experts" class="bg-slate-50 py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <h2 class="font-display font-extrabold text-3xl text-navy">Featured experts</h2>
+        <p id="resultCount" class="mt-2 text-slate-500"></p>
+      </div>
+      <div id="filterChips" class="flex flex-wrap gap-2" role="group" aria-label="Filter by category"></div>
+    </div>
+    <div id="expertGrid" class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+    <div id="emptyState" class="hidden mt-8 text-center py-16 bg-white rounded-xl border border-dashed border-slate-300">
+      <p class="font-semibold text-navy">No experts match that search.</p>
+      <button id="resetBtn" class="mt-3 text-trust font-semibold hover:underline">Show all experts</button>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section id="how" class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+  <h2 class="font-display font-extrabold text-3xl text-navy">How it works</h2>
+  <ol class="mt-10 grid md:grid-cols-3 gap-8">
+    <li class="relative pl-14">
+      <span class="absolute left-0 top-0 w-10 h-10 rounded-full bg-indigo-900 text-white font-display font-extrabold grid place-items-center">1</span>
+      <h3 class="font-semibold text-navy text-lg">Find your expert</h3>
+      <p class="mt-1 text-slate-600">Search by topic, compare ratings and rates, and read reviews from other learners.</p>
+    </li>
+    <li class="relative pl-14">
+      <span class="absolute left-0 top-0 w-10 h-10 rounded-full bg-indigo-900 text-white font-display font-extrabold grid place-items-center">2</span>
+      <h3 class="font-semibold text-navy text-lg">Book &amp; pay securely</h3>
+      <p class="mt-1 text-slate-600">Choose a 30 or 60 minute slot. Pay by UPI or card. You're refunded if the expert cancels.</p>
+    </li>
+    <li class="relative pl-14">
+      <span class="absolute left-0 top-0 w-10 h-10 rounded-full bg-trust text-white font-display font-extrabold grid place-items-center">3</span>
+      <h3 class="font-semibold text-navy text-lg">Attend the video session</h3>
+      <p class="mt-1 text-slate-600">Join a private 1-on-1 call, get guidance, and leave with clear next steps.</p>
+    </li>
+  </ol>
+  <div id="pricing" class="mt-12 scroll-mt-24 rounded-xl border border-slate-200 p-6 flex flex-wrap items-center justify-between gap-4">
+    <div>
+      <h3 class="font-display font-extrabold text-xl text-navy">Simple pricing</h3>
+      <p class="text-slate-600 mt-1">Experts set their own rates. You pay the session price plus a 10% platform fee. No subscriptions.</p>
+    </div>
+    <a href="#experts" class="px-5 py-2.5 border border-indigo-900 text-indigo-900 font-semibold rounded-lg hover:bg-indigo-900 hover:text-white">See expert rates</a>
+  </div>
+</section>
+
+<!-- Become an expert -->
+<section id="become" class="px-4 sm:px-6 pb-16 scroll-mt-20">
+  <div class="max-w-7xl mx-auto bg-navy text-white rounded-2xl p-8 sm:p-12 grid lg:grid-cols-2 gap-10 items-center">
+    <div>
+      <h2 class="font-display font-extrabold text-3xl sm:text-4xl leading-tight">Turn your experience into income</h2>
+      <p class="mt-4 text-slate-300 max-w-md">Join ExpertBridge and advise people who need exactly what you know.</p>
+      <a href="#" class="inline-block mt-7 px-6 py-3 bg-trust hover:bg-trust-dark font-semibold rounded-lg">Apply as an Expert</a>
+    </div>
+    <ul class="space-y-5">
+      <li class="flex gap-4"><span class="text-trust font-bold text-xl" aria-hidden="true">✓</span><div><b>Monetize your knowledge</b><p class="text-slate-400 text-sm">Get paid for every session you host.</p></div></li>
+      <li class="flex gap-4"><span class="text-trust font-bold text-xl" aria-hidden="true">✓</span><div><b>Flexible timing</b><p class="text-slate-400 text-sm">Open only the slots that suit your schedule.</p></div></li>
+      <li class="flex gap-4"><span class="text-trust font-bold text-xl" aria-hidden="true">✓</span><div><b>Keep 80–85% of earnings</b><p class="text-slate-400 text-sm">Higher-rated experts keep more.</p></div></li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-navy text-slate-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-8 text-sm">
+    <div><p class="font-display font-extrabold text-xl text-white">ExpertBridge</p><p class="mt-2 text-slate-400">Verified experts. Real conversations.</p></div>
+    <div><p class="font-semibold text-white mb-3">Quick links</p><ul class="space-y-2"><li><a href="#experts" class="hover:text-white">Browse Experts</a></li><li><a href="#how" class="hover:text-white">How It Works</a></li><li><a href="#become" class="hover:text-white">Become an Expert</a></li></ul></div>
+    <div><p class="font-semibold text-white mb-3">Legal</p><ul class="space-y-2"><li><a href="#" class="hover:text-white">Terms of Service</a></li><li><a href="#" class="hover:text-white">Privacy Policy</a></li><li><a href="#" class="hover:text-white">Refund Policy</a></li></ul></div>
+    <div><p class="font-semibold text-white mb-3">Follow us</p><ul class="space-y-2"><li><a href="#" class="hover:text-white">LinkedIn</a></li><li><a href="#" class="hover:text-white">X (Twitter)</a></li><li><a href="#" class="hover:text-white">Instagram</a></li><li><a href="#" class="hover:text-white">YouTube</a></li></ul></div>
+  </div>
+  <div class="border-t border-slate-700 py-5 text-center text-xs text-slate-500">© <span id="yr"></span> ExpertBridge. All rights reserved.</div>
+</footer>
+
+<!-- Booking modal -->
+<div id="modal" class="hidden fixed inset-0 z-50 bg-slate-900/60 p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="bg-white rounded-2xl max-w-lg mx-auto my-8 shadow-2xl">
+    <div class="flex items-start justify-between p-6 border-b border-slate-200">
+      <div class="flex items-center gap-3">
+        <div id="mAvatar" class="w-12 h-12 rounded-full grid place-items-center text-white font-bold"></div>
+        <div><h3 id="mTitle" class="font-display font-extrabold text-xl text-navy"></h3><p id="mRole" class="text-sm text-slate-500"></p></div>
+      </div>
+      <button id="closeModal" class="p-1 text-slate-400 hover:text-slate-700 text-2xl leading-none" aria-label="Close">×</button>
+    </div>
+    <div id="bookBody" class="p-6 space-y-6">
+      <fieldset><legend class="font-semibold text-navy mb-2">Session length</legend>
+        <div class="grid grid-cols-2 gap-3" id="durations"></div></fieldset>
+      <div><label for="date" class="font-semibold text-navy block mb-2">Date</label>
+        <input id="date" type="date" class="w-full border border-slate-300 rounded-lg px-3 py-2.5"></div>
+      <fieldset><legend class="font-semibold text-navy mb-2">Time slot</legend>
+        <div id="slots" class="grid grid-cols-3 gap-2"></div></fieldset>
+      <dl class="bg-slate-50 rounded-xl p-4 text-sm space-y-2">
+        <div class="flex justify-between"><dt>Session fee</dt><dd id="pBase"></dd></div>
+        <div class="flex justify-between"><dt>Platform service fee (10%)</dt><dd id="pFee"></dd></div>
+        <div class="flex justify-between border-t border-slate-200 pt-2 font-bold text-navy text-base"><dt>Total</dt><dd id="pTotal"></dd></div>
+      </dl>
+      <button id="confirmBtn" class="w-full py-3 bg-trust hover:bg-trust-dark text-white font-semibold rounded-lg">Pay &amp; confirm booking</button>
+      <p id="err" class="hidden text-sm text-red-600 text-center">Choose a date and a time slot to continue.</p>
+    </div>
+    <div id="doneBody" class="hidden p-10 text-center">
+      <div class="w-14 h-14 mx-auto rounded-full bg-trust text-white text-2xl grid place-items-center">✓</div>
+      <h4 class="mt-4 font-display font-extrabold text-xl text-navy">Booking confirmed</h4>
+      <p id="doneMsg" class="mt-2 text-slate-600"></p>
+      <button id="doneClose" class="mt-6 px-6 py-2.5 bg-indigo-900 text-white font-semibold rounded-lg">Done</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const CATS = [
+  { name: 'Technology', icon: '💻', note: 'Engineering, AI, data' },
+  { name: 'Business & Startups', icon: '🚀', note: 'Strategy, funding, growth' },
+  { name: 'Career & Jobs', icon: '🧭', note: 'Interviews, switches, resumes' },
+  { name: 'Finance & Legal', icon: '⚖️', note: 'Investing, tax, contracts' },
+  { name: 'Marketing', icon: '📣', note: 'Brand, SEO, performance' }
+];
+const EXPERTS = [
+  { id: 1, name: 'Aditi Sharma', role: 'Staff Engineer, ex-Google', cat: 'Technology', tags: 'software engineering system design backend', rating: 4.9, reviews: 212, p30: 599, p60: 999, color: '#312E81' },
+  { id: 2, name: 'Rohan Mehta', role: 'SEBI-registered Advisor', cat: 'Finance & Legal', tags: 'mutual funds investing tax planning', rating: 4.8, reviews: 164, p30: 699, p60: 1199, color: '#059669' },
+  { id: 3, name: 'Kavya Iyer', role: 'Career Coach, 12 yrs HR', cat: 'Career & Jobs', tags: 'resume interview career switch job', rating: 5.0, reviews: 308, p30: 499, p60: 899, color: '#BE123C' },
+  { id: 4, name: 'Arjun Bose', role: 'Startup Founder, 2 exits', cat: 'Business & Startups', tags: 'startup fundraising pitch strategy', rating: 4.9, reviews: 97, p30: 899, p60: 1499, color: '#B45309' },
+  { id: 5, name: 'Neha Kapoor', role: 'Advocate, Corporate Law', cat: 'Finance & Legal', tags: 'legal advice contracts compliance', rating: 4.7, reviews: 121, p30: 799, p60: 1299, color: '#0F766E' },
+  { id: 6, name: 'Sameer Das', role: 'Growth Lead, D2C brands', cat: 'Marketing', tags: 'seo performance marketing brand growth', rating: 4.8, reviews: 88, p30: 549, p60: 949, color: '#6D28D9' }
+];
+const $ = id => document.getElementById(id);
+const inr = n => '₹' + Math.round(n).toLocaleString('en-IN');
+let activeCat = 'All', query = '';
+
+function initials(n) { return n.split(' ').map(w => w[0]).join(''); }
+
+function renderCategories() {
+  $('categoryGrid').innerHTML = CATS.map(c => `
+    <button data-cat="${c.name}" class="cat-card text-left p-5 bg-white border border-slate-200 rounded-xl hover:border-trust hover:shadow-md transition">
+      <span class="text-2xl" aria-hidden="true">${c.icon}</span>
+      <span class="block mt-3 font-semibold text-navy">${c.name}</span>
+      <span class="block text-xs text-slate-500 mt-1">${c.note}</span>
+    </button>`).join('');
+  $('filterChips').innerHTML = ['All', ...CATS.map(c => c.name)].map(n =>
+    `<button data-chip="${n}" class="chip px-3.5 py-1.5 text-sm font-medium rounded-full border"></button>`).join('');
+  $('filterChips').querySelectorAll('.chip').forEach(b => b.textContent = b.dataset.chip);
+}
+
+function renderExperts() {
+  const q = query.trim().toLowerCase();
+  const list = EXPERTS.filter(e =>
+    (activeCat === 'All' || e.cat === activeCat) &&
+    (!q || (e.name + e.role + e.cat + e.tags).toLowerCase().includes(q)));
+  $('expertGrid').innerHTML = list.map(e => `
+    <article class="bg-white rounded-xl border border-slate-200 p-5 flex flex-col">
+      <div class="flex items-center gap-3">
+        <div class="w-14 h-14 rounded-full grid place-items-center text-white font-bold text-lg" style="background:${e.color}" aria-hidden="true">${initials(e.name)}</div>
+        <div><h3 class="font-semibold text-navy leading-tight">${e.name} <span title="Verified" class="text-trust">✔</span></h3>
+        <p class="text-sm text-slate-500">${e.role}</p></div>
+      </div>
+      <p class="mt-4"><span class="inline-block text-xs font-medium bg-indigo-50 text-indigo-900 px-2.5 py-1 rounded-full">${e.cat}</span></p>
+      <p class="mt-3 text-sm"><span class="text-amber-500" aria-hidden="true">★</span> <b class="text-navy">${e.rating.toFixed(1)}</b> <span class="text-slate-500">(${e.reviews} reviews)</span></p>
+      <div class="mt-auto pt-5 flex items-center justify-between">
+        <p><span class="font-display font-extrabold text-xl text-navy">${inr(e.p60)}</span><span class="text-xs text-slate-500">/session</span></p>
+        <button data-book="${e.id}" class="px-4 py-2 text-sm bg-trust hover:bg-trust-dark text-white font-semibold rounded-lg">Book Session</button>
+      </div>
+    </article>`).join('');
+  $('emptyState').classList.toggle('hidden', list.length > 0);
+  $('resultCount').textContent = `${list.length} expert${list.length === 1 ? '' : 's'}` + (activeCat !== 'All' ? ` in ${activeCat}` : '');
+  document.querySelectorAll('.chip').forEach(c => {
+    const on = c.dataset.chip === activeCat;
+    c.className = 'chip px-3.5 py-1.5 text-sm font-medium rounded-full border ' + (on ? 'bg-indigo-900 text-white border-indigo-900' : 'bg-white text-slate-600 border-slate-300 hover:border-indigo-900');
+    c.setAttribute('aria-pressed', on);
+  });
+}
+
+function setCat(c) { activeCat = c; $('cat').value = c; renderExperts(); }
+
+$('categoryGrid').addEventListener('click', e => {
+  const b = e.target.closest('[data-cat]'); if (!b) return;
+  setCat(b.dataset.cat); $('experts').scrollIntoView({ behavior: 'smooth' });
+});
+$('filterChips').addEventListener('click', e => { const b = e.target.closest('[data-chip]'); if (b) setCat(b.dataset.chip); });
+$('searchForm').addEventListener('submit', e => {
+  e.preventDefault(); query = $('q').value; setCat($('cat').value);
+  $('experts').scrollIntoView({ behavior: 'smooth' });
+});
+$('resetBtn').addEventListener('click', () => { query = ''; $('q').value = ''; setCat('All'); });
+$('menuBtn').addEventListener('click', () => {
+  const m = $('mobileMenu'); m.classList.toggle('hidden');
+  $('menuBtn').setAttribute('aria-expanded', !m.classList.contains('hidden'));
+});
+$('mobileMenu').addEventListener('click', e => { if (e.target.tagName === 'A') $('mobileMenu').classList.add('hidden'); });
+
+/* Booking modal */
+const SLOTS = ['10:00 AM', '11:30 AM', '2:00 PM', '3:30 PM', '5:00 PM', '7:00 PM'];
+let cur = null, dur = 60, slot = null, lastFocus = null;
+
+function price() {
+  const base = dur === 30 ? cur.p30 : cur.p60, fee = base * 0.10;
+  $('pBase').textContent = inr(base); $('pFee').textContent = inr(fee); $('pTotal').textContent = inr(base + fee);
+}
+function renderDur() {
+  $('durations').innerHTML = [30, 60].map(d => `
+    <button type="button" data-dur="${d}" class="p-3 rounded-lg border text-left ${d === dur ? 'border-indigo-900 bg-indigo-50 ring-1 ring-indigo-900' : 'border-slate-300'}" aria-pressed="${d === dur}">
+      <b class="text-navy">${d} min</b><span class="block text-sm text-slate-500">${inr(d === 30 ? cur.p30 : cur.p60)}</span></button>`).join('');
+}
+function renderSlots() {
+  $('slots').innerHTML = SLOTS.map(s => `<button type="button" data-slot="${s}" class="py-2 text-sm rounded-lg border border-slate-300 ${s === slot ? 'slot-active' : 'hover:border-indigo-900'}" aria-pressed="${s === slot}">${s}</button>`).join('');
+}
+function openModal(id) {
+  cur = EXPERTS.find(e => e.id === id); dur = 60; slot = null; lastFocus = document.activeElement;
+  $('mTitle').textContent = cur.name; $('mRole').textContent = cur.role;
+  $('mAvatar').textContent = initials(cur.name); $('mAvatar').style.background = cur.color;
+  const d = new Date(); d.setDate(d.getDate() + 1);
+  $('date').min = new Date().toISOString().split('T')[0]; $('date').value = d.toISOString().split('T')[0];
+  $('bookBody').classList.remove('hidden'); $('doneBody').classList.add('hidden'); $('err').classList.add('hidden');
+  renderDur(); renderSlots(); price();
+  $('modal').classList.remove('hidden'); document.body.style.overflow = 'hidden';
+  $('closeModal').focus();
+}
+function closeModal() {
+  $('modal').classList.add('hidden'); document.body.style.overflow = '';
+  if (lastFocus) lastFocus.focus();
+}
+$('expertGrid').addEventListener('click', e => { const b = e.target.closest('[data-book]'); if (b) openModal(+b.dataset.book); });
+$('durations').addEventListener('click', e => { const b = e.target.closest('[data-dur]'); if (b) { dur = +b.dataset.dur; renderDur(); price(); } });
+$('slots').addEventListener('click', e => { const b = e.target.closest('[data-slot]'); if (b) { slot = b.dataset.slot; renderSlots(); $('err').classList.add('hidden'); } });
+$('confirmBtn').addEventListener('click', () => {
+  if (!$('date').value || !slot) { $('err').classList.remove('hidden'); return; }
+  const dt = new Date($('date').value + 'T00:00').toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' });
+  $('doneMsg').textContent = `Your ${dur}-minute session with ${cur.name} is set for ${dt} at ${slot}. A video link will be emailed to you.`;
+  $('bookBody').classList.add('hidden'); $('doneBody').classList.remove('hidden');
+});
+$('closeModal').addEventListener('click', closeModal);
+$('doneClose').addEventListener('click', closeModal);
+$('modal').addEventListener('click', e => { if (e.target === $('modal')) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('modal').classList.contains('hidden')) closeModal(); });
+
+$('yr').textContent = new Date().getFullYear();
+renderCategories(); renderExperts();
+</script>
+</body>
+</html>
