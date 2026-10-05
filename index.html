@@ -40,7 +40,7 @@ tailwind.config = { theme: { extend: {
       <a href="#become" class="hover:text-brand">Become an Expert</a>
     </nav>
     <div class="hidden lg:flex items-center gap-3">
-      <button class="px-4 py-2 text-sm font-semibold text-ink hover:bg-slate-100 rounded-full">Sign In</button>
+      <button class="px-4 py-2 text-sm font-semibold text-ink hover:bg-slate-100 rounded-full"<button data-admin class="px-4 py-2 text-sm font-semibold text-brand-dark border border-brand/30 hover:bg-brand-soft rounded-full">Admin</button>Sign In</button>
       <a href="#experts" class="px-5 py-2.5 text-sm font-semibold text-white bg-trust hover:bg-trust-dark rounded-full shadow-lg shadow-emerald-600/20">Book a Session</a>
     </div>
     <button id="menuBtn" class="lg:hidden p-2 rounded-lg hover:bg-slate-100" aria-label="Menu" aria-expanded="false">
@@ -50,7 +50,7 @@ tailwind.config = { theme: { extend: {
   <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-slate-200 px-4 py-4 text-sm font-semibold space-y-1">
     <a href="#home" class="block py-2">Home</a><a href="#experts" class="block py-2">Browse Experts</a>
     <a href="#how" class="block py-2">How It Works</a><a href="#pricing" class="block py-2">Pricing</a><a href="#become" class="block py-2">Become an Expert</a>
-    <div class="flex gap-3 pt-3"><button class="flex-1 py-2.5 border border-slate-300 rounded-full">Sign In</button>
+    <button data-admin class="block w-full text-left py-2 text-brand-dark">Admin</button><div class="flex gap-3 pt-3"><button class="flex-1 py-2.5 border border-slate-300 rounded-full">Sign In</button>
     <a href="#experts" class="flex-1 text-center py-2.5 bg-trust text-white rounded-full">Book a Session</a></div>
   </div>
 </header>
@@ -168,7 +168,42 @@ tailwind.config = { theme: { extend: {
   </div>
   <div class="border-t border-white/10 py-5 text-center text-xs">© <span id="yr"></span> ExpertBridge. All rights reserved.</div>
 </footer>
+<!-- Admin modal -->
+<div id="adminModal" class="hidden fixed inset-0 z-50 bg-ink/70 backdrop-blur-sm p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="aTitle">
+  <div class="bg-white rounded-3xl max-w-lg mx-auto my-8 shadow-2xl">
+    <div class="flex items-center justify-between p-6 border-b border-slate-100">
+      <h3 id="aTitle" class="font-extrabold text-xl text-ink">Admin: add an expert</h3>
+      <button id="closeAdmin" class="text-slate-400 hover:text-slate-700 text-3xl leading-none" aria-label="Close">×</button>
+    </div>
 
+    <!-- Login -->
+    <form id="adminLogin" class="p-6 space-y-4">
+      <label for="aPass" class="font-bold text-ink block">Admin password</label>
+      <input id="aPass" type="password" class="w-full border border-slate-300 rounded-xl px-3 py-2.5" autocomplete="off">
+      <p id="aErr" class="hidden text-sm text-red-600">Wrong password. Try again.</p>
+      <button class="w-full py-3 bg-brand-dark hover:bg-brand text-white font-bold rounded-xl">Unlock</button>
+    </form>
+
+    <!-- Panel -->
+    <div id="adminPanel" class="hidden p-6 space-y-6">
+      <form id="adminForm" class="grid grid-cols-2 gap-4 text-sm">
+        <label class="col-span-2">Full name<input id="aName" required class="mt-1 w-full border border-slate-300 rounded-xl px-3 py-2.5"></label>
+        <label class="col-span-2">Title / role<input id="aRole" required placeholder="e.g. CA, 10 yrs experience" class="mt-1 w-full border border-slate-300 rounded-xl px-3 py-2.5"></label>
+        <label class="col-span-2">Category<select id="aCat" class="mt-1 w-full border border-slate-300 rounded-xl px-3 py-2.5 bg-white"></select></label>
+        <label class="col-span-2">Search keywords<input id="aTags" placeholder="e.g. tax gst filing" class="mt-1 w-full border border-slate-300 rounded-xl px-3 py-2.5"></label>
+        <label>Rating (1-5)<input id="aRating" type="number" min="1" max="5" step="0.1" value="5" required class="mt-1 w-full border border-slate-300 rounded-xl px-3 py-2.5"></label>
+        <label>Total reviews<input id="aReviews" type="number" min="0" value="0" required class="mt-1 w-full border border-slate-300 rounded-xl px-3 py-2.5"></label>
+        <label>30 min price (₹)<input id="aP30" type="number" min="0" value="299" required class="mt-1 w-full border border-slate-300 rounded-xl px-3 py-2.5"></label>
+        <label>60 min price (₹)<input id="aP60" type="number" min="0" value="499" required class="mt-1 w-full border border-slate-300 rounded-xl px-3 py-2.5"></label>
+        <button class="col-span-2 py-3 bg-trust hover:bg-trust-dark text-white font-bold rounded-xl">Add expert</button>
+      </form>
+      <div>
+        <h4 class="font-bold text-ink mb-2">Experts you added</h4>
+        <ul id="customList" class="space-y-2 text-sm"></ul>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- Booking modal -->
 <div id="modal" class="hidden fixed inset-0 z-50 bg-ink/70 backdrop-blur-sm p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="mTitle">
   <div class="bg-white rounded-3xl max-w-lg mx-auto my-8 shadow-2xl">
@@ -292,7 +327,65 @@ $('closeModal').addEventListener('click', closeModal);
 $('doneClose').addEventListener('click', closeModal);
 $('modal').addEventListener('click', e => { if (e.target === $('modal')) closeModal(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('modal').classList.contains('hidden')) closeModal(); });
+/* Admin: add experts manually */
+const ADMIN_PASS = 'admin123';            // এটা নিজের password দিয়ে বদলে নিন
+const STORE = 'eb_custom_experts';
+let custom = [];
+try { custom = JSON.parse(localStorage.getItem(STORE)) || []; } catch (e) {}
+EXPERTS.push(...custom);
 
+const clean = s => String(s).replace(/[<>&"'`]/g, '').trim();
+const saveCustom = () => { try { localStorage.setItem(STORE, JSON.stringify(custom)); } catch (e) {} };
+
+$('aCat').innerHTML = CATS.map(c => `<option>${c.name}</option>`).join('');
+
+function renderCustomList() {
+  $('customList').innerHTML = custom.length
+    ? custom.map(e => `<li class="flex items-center justify-between bg-slate-50 rounded-xl px-3 py-2"><span><b class="text-ink">${e.name}</b> <span class="text-slate-500">· ${e.cat}</span></span><button data-del="${e.id}" class="text-red-600 font-semibold hover:underline">Remove</button></li>`).join('')
+    : '<li class="text-slate-500">No experts added yet.</li>';
+}
+function openAdmin() {
+  $('adminModal').classList.remove('hidden'); document.body.style.overflow = 'hidden';
+  $('aPass').value = ''; $('aErr').classList.add('hidden');
+  $('adminLogin').classList.remove('hidden'); $('adminPanel').classList.add('hidden');
+  $('aPass').focus();
+}
+function closeAdmin() { $('adminModal').classList.add('hidden'); document.body.style.overflow = ''; }
+
+document.querySelectorAll('[data-admin]').forEach(b => b.addEventListener('click', () => { $('mobileMenu').classList.add('hidden'); openAdmin(); }));
+$('closeAdmin').addEventListener('click', closeAdmin);
+$('adminModal').addEventListener('click', e => { if (e.target === $('adminModal')) closeAdmin(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('adminModal').classList.contains('hidden')) closeAdmin(); });
+
+$('adminLogin').addEventListener('submit', e => {
+  e.preventDefault();
+  if ($('aPass').value === ADMIN_PASS) {
+    $('adminLogin').classList.add('hidden'); $('adminPanel').classList.remove('hidden'); renderCustomList();
+  } else { $('aErr').classList.remove('hidden'); }
+});
+
+$('adminForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const cat = $('aCat').value;
+  const ex = {
+    id: Date.now(), name: clean($('aName').value), role: clean($('aRole').value), cat,
+    tags: clean($('aTags').value).toLowerCase(),
+    rating: Math.min(5, Math.max(1, +$('aRating').value)), reviews: +$('aReviews').value,
+    p30: +$('aP30').value, p60: +$('aP60').value,
+    g: CATS.find(c => c.name === cat).g
+  };
+  custom.push(ex); EXPERTS.push(ex); saveCustom();
+  renderExperts(); renderCustomList(); $('adminForm').reset();
+  $('aRating').value = 5; $('aReviews').value = 0; $('aP30').value = 299; $('aP60').value = 499;
+});
+
+$('customList').addEventListener('click', e => {
+  const b = e.target.closest('[data-del]'); if (!b) return;
+  const id = +b.dataset.del;
+  custom = custom.filter(x => x.id !== id);
+  const i = EXPERTS.findIndex(x => x.id === id); if (i > -1) EXPERTS.splice(i, 1);
+  saveCustom(); renderExperts(); renderCustomList();
+});
 $('yr').textContent = new Date().getFullYear();
 renderStatic(); renderExperts();
 </script>
